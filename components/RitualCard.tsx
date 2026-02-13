@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Ritual, CandleType } from '../types';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { MessageCircle } from 'lucide-react';
+import { Instagram } from 'lucide-react';
 
 interface RitualCardProps {
   ritual: Ritual;
@@ -23,9 +23,8 @@ const RitualCard: React.FC<RitualCardProps> = ({ ritual }) => {
   const formattedPrice = price.toLocaleString('es-AR');
 
   const handleConsult = () => {
-    const message = `Hola Franlilo, estoy interesado en el ritual *${ritual.name}* con la opción *${selectedType}* ($${formattedPrice}). Vi tu web.`;
-    const url = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`; 
-    window.open(url, '_blank');
+    // Redirección directa al perfil de Instagram
+    window.open('https://www.instagram.com/franlilotarot', '_blank');
   };
 
   // Mouse move effect for border glow
@@ -125,9 +124,9 @@ const RitualCard: React.FC<RitualCardProps> = ({ ritual }) => {
         
         <button 
           onClick={handleConsult}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-mystic-purple to-purple-900 hover:from-mystic-gold hover:to-yellow-500 hover:text-black text-white py-3.5 rounded-sm font-sans font-bold tracking-wider text-sm transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(107,33,168,0.4)] hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]"
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#8a3ab9] to-[#bc1888] hover:from-mystic-gold hover:to-yellow-500 hover:text-black text-white py-3.5 rounded-sm font-sans font-bold tracking-wider text-sm transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(188,24,136,0.4)] hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]"
         >
-          <MessageCircle size={18} />
+          <Instagram size={18} />
           SOLICITAR RITUAL
         </button>
       </div>

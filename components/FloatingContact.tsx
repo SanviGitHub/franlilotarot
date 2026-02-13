@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const FloatingContact: React.FC = () => {
   return (
     <motion.a
-      href="https://www.instagram.com/franlilo" 
+      href="https://www.instagram.com/franlilotarot" 
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-40 bg-gradient-to-tr from-[#f09433] via-[#bc1888] to-[#8a3ab9] text-white p-4 rounded-full shadow-[0_0_20px_rgba(188,24,136,0.5)] flex items-center justify-center hover:scale-110 hover:shadow-[0_0_30px_rgba(188,24,136,0.8)] transition-all duration-300 group"

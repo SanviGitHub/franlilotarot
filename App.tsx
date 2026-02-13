@@ -10,9 +10,14 @@ import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
 import FloatingContact from './components/FloatingContact';
 import LoadingScreen from './components/LoadingScreen';
+import IntroScreen from './components/IntroScreen';
+import { AnimatePresence, motion } from 'framer-motion';
+
+// Sequence States
+type AppState = 'loading' | 'intro' | 'content';
 
 const MainLayout: React.FC = () => {
-  const [loading, setLoading] = useState(true);
+  const [appState, setAppState] = useState<AppState>('loading');
   const [showLogin, setShowLogin] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
 
@@ -29,19 +34,17 @@ const MainLayout: React.FC = () => {
         const img = new Image();
         img.src = src;
         img.onload = resolve;
-        img.onerror = resolve; // Resolve even on error to avoid sticking
+        img.onerror = resolve; // Resolve even on error
       });
     };
 
-    // 3. Minimum wait time for aesthetic purposes (so the logo is seen)
+    // 3. Asset Loading + Min Wait time
     const minLoadTime = new Promise(resolve => setTimeout(resolve, 2500));
-    
-    // 4. Wait for images
     const imagesLoaded = Promise.all(imageUrls.map(preloadImage));
 
-    // 5. When both finish, hide loading screen
     Promise.all([minLoadTime, imagesLoaded]).then(() => {
-      setLoading(false);
+      // Act 1 Complete -> Trigger Transition to Act 2
+      setAppState('intro');
     });
 
     // --- Admin Event Listeners ---
@@ -57,36 +60,60 @@ const MainLayout: React.FC = () => {
     };
   }, []);
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+  const handleIntroComplete = () => {
+    // Act 2 Complete -> Trigger Act 3
+    setAppState('content');
+  };
 
   return (
-    <div className="min-h-screen bg-mystic-black text-gray-100 font-sans selection:bg-mystic-purple selection:text-white">
-      <StarBackground />
-      
-      <main className="animate-in fade-in duration-1000">
-        <Hero />
-        <About />
-        <Education />
-        <Catalog />
-      </main>
+    <div className="min-h-screen bg-mystic-black text-gray-100 font-sans selection:bg-mystic-purple selection:text-white overflow-x-hidden">
+      <AnimatePresence mode="wait">
+        {/* Act 1: Loading Screen */}
+        {appState === 'loading' && (
+          <LoadingScreen key="loading" />
+        )}
 
-      <FloatingContact />
-      
-      <Footer 
-        onOpenLogin={() => setShowLogin(true)} 
-        onOpenDashboard={() => setShowDashboard(true)} 
-      />
+        {/* Act 2: Intersticial "Franlilo Brujo" */}
+        {appState === 'intro' && (
+          <IntroScreen key="intro" onComplete={handleIntroComplete} />
+        )}
+      </AnimatePresence>
 
-      <AdminLogin 
-        isOpen={showLogin} 
-        onClose={() => setShowLogin(false)} 
-        onSuccess={() => setShowDashboard(true)}
-      />
+      {/* Act 3: Main Content Entry */}
+      {appState === 'content' && (
+        <motion.div
+          key="main-content"
+          initial={{ scale: 1.1, filter: "blur(12px)", opacity: 0 }}
+          animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="relative"
+        >
+          <StarBackground />
+          
+          <main>
+            <Hero />
+            <About />
+            <Education />
+            <Catalog />
+          </main>
 
-      {showDashboard && (
-        <AdminDashboard onClose={() => setShowDashboard(false)} />
+          <FloatingContact />
+          
+          <Footer 
+            onOpenLogin={() => setShowLogin(true)} 
+            onOpenDashboard={() => setShowDashboard(true)} 
+          />
+
+          <AdminLogin 
+            isOpen={showLogin} 
+            onClose={() => setShowLogin(false)} 
+            onSuccess={() => setShowDashboard(true)}
+          />
+
+          {showDashboard && (
+            <AdminDashboard onClose={() => setShowDashboard(false)} />
+          )}
+        </motion.div>
       )}
     </div>
   );
