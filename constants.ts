@@ -1,5 +1,9 @@
 import { Ritual } from './types';
 
+// CAMBIAR ESTO cada vez que modifiques la lista de rituales manualmente
+// para obligar a los navegadores a actualizar sus datos guardados.
+export const DATA_VERSION = 'v1.5-catalog-update'; 
+
 export const INITIAL_RITUALS: Ritual[] = [
   // --- AMOR ---
   {

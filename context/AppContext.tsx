@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Ritual, AdminState } from '../types';
-import { INITIAL_RITUALS } from '../constants';
+import { INITIAL_RITUALS, DATA_VERSION } from '../constants';
 
 interface AppContextType {
   rituals: Ritual[];
@@ -18,15 +18,32 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [rituals, setRituals] = useState<Ritual[]>(INITIAL_RITUALS);
   const [admin, setAdmin] = useState<AdminState>({ isAuthenticated: false, user: null });
 
-  // Load from LocalStorage on mount
+  // Load from LocalStorage on mount with VERSION CHECK
   useEffect(() => {
     const savedRituals = localStorage.getItem('franlilo_rituals');
+    const savedVersion = localStorage.getItem('franlilo_version');
+
     if (savedRituals) {
-      try {
-        setRituals(JSON.parse(savedRituals));
-      } catch (e) {
-        console.error("Failed to parse saved rituals", e);
+      // Check if version matches
+      if (savedVersion === DATA_VERSION) {
+        // Version is current, load from storage (allows admin edits to persist)
+        try {
+          setRituals(JSON.parse(savedRituals));
+        } catch (e) {
+          console.error("Failed to parse saved rituals", e);
+          setRituals(INITIAL_RITUALS); // Fallback
+        }
+      } else {
+        // Version mismatch! This means we updated the code but browser has old data.
+        // Force update to new constants
+        console.log("Detectada nueva versión de datos. Actualizando catálogo...");
+        setRituals(INITIAL_RITUALS);
+        localStorage.setItem('franlilo_version', DATA_VERSION);
+        localStorage.setItem('franlilo_rituals', JSON.stringify(INITIAL_RITUALS));
       }
+    } else {
+      // First visit
+      localStorage.setItem('franlilo_version', DATA_VERSION);
     }
     
     const savedAdmin = localStorage.getItem('franlilo_admin');
@@ -51,6 +68,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const resetRituals = () => {
       setRituals(INITIAL_RITUALS);
+      localStorage.setItem('franlilo_version', DATA_VERSION);
   }
 
   const login = (user: string, pass: string): boolean => {
