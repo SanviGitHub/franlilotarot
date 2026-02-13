@@ -7,7 +7,7 @@ export interface Prices {
   '7d': number;
 }
 
-export type Category = 'Amor' | 'Limpieza' | 'Apertura' | 'Protección' | 'Dominio';
+export type Category = 'Amor' | 'Limpieza' | 'Apertura' | 'Protección' | 'Dominio' | 'Prosperidad' | 'Justicia' | 'Salud';
 
 export interface Ritual {
   id: string;

@@ -49,7 +49,7 @@ const About: React.FC = () => {
           
           <div className="pt-8 border-t border-white/10 flex gap-12">
             <div className="text-center">
-              <span className="block text-4xl font-serif text-mystic-purple font-bold drop-shadow-glow">10+</span>
+              <span className="block text-4xl font-serif text-mystic-purple font-bold drop-shadow-glow">6+</span>
               <span className="text-xs uppercase tracking-widest text-gray-400 mt-2 block">Años de Exp.</span>
             </div>
             <div className="text-center">

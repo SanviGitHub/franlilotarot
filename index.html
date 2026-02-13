@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Franlilo Tarot & Rituales | Alta Magia</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/5378Tr0/franlilo.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +33,16 @@
             },
             animation: {
               'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'shine': 'shine 1s',
+            },
+            keyframes: {
+              shine: {
+                '100%': { left: '125%' },
+              },
+              shimmer: {
+                '0%': { transform: 'translateX(-150%) skewX(-12deg)' },
+                '100%': { transform: 'translateX(150%) skewX(-12deg)' },
+              }
             },
             backgroundImage: {
               'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
