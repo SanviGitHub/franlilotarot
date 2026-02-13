@@ -36,39 +36,31 @@ const Catalog: React.FC = () => {
   return (
     <section id="catalogo" className="py-24 px-6 relative z-10 bg-mystic-black min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif text-white mb-8"
-          >
-            Catálogo Sagrado
-          </motion.h2>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b border-white/10 pb-6">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-2">
+              Catálogo de Servicios
+            </h2>
+            <p className="text-gray-500 text-sm">Seleccione el ritual adecuado para su propósito.</p>
+          </div>
           
-          {/* Mini Search Bar */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative max-w-md mx-auto group"
-          >
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Search className="text-mystic-gold/50 group-focus-within:text-mystic-gold transition-colors duration-300" size={20} />
+          <div className="relative w-full md:w-auto min-w-[300px]">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="text-gray-500" size={16} />
             </div>
             <input
                 type="text"
-                placeholder="Buscar ritual, intención o energía..."
+                placeholder="Buscar por nombre o categoría..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-full py-3 pl-12 pr-6 text-white placeholder-gray-500 focus:outline-none focus:border-mystic-gold/50 focus:bg-black/40 focus:shadow-[0_0_20px_rgba(212,175,55,0.15)] transition-all duration-300 backdrop-blur-sm font-sans text-sm tracking-wide"
+                className="w-full bg-[#111] border border-gray-800 rounded-sm py-2.5 pl-10 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-mystic-gold transition-colors text-sm font-sans"
             />
-          </motion.div>
+          </div>
         </div>
 
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredRituals.map(ritual => (
@@ -81,24 +73,20 @@ const Catalog: React.FC = () => {
         <AnimatePresence>
           {filteredRituals.length === 0 && (
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-center py-16 px-4"
+              className="text-center py-20 bg-[#111] border border-gray-800 rounded-sm"
             >
-              <div className="inline-block p-4 rounded-full bg-white/5 mb-4">
-                 <Search className="text-gray-600" size={32} />
-              </div>
-              <p className="text-mystic-gold font-serif text-xl mb-2">Energía no encontrada</p>
-              <p className="text-gray-400 text-sm font-sans">
-                No encontramos rituales que coincidan con <span className="text-white font-bold">"{searchTerm}"</span>. 
-                <br/>Intenta buscar por una sola palabra clave (ej. "amor", "dinero").
+              <p className="text-white font-serif text-lg mb-1">Sin resultados</p>
+              <p className="text-gray-500 text-sm">
+                No se encontraron servicios que coincidan con su búsqueda.
               </p>
               <button 
                 onClick={() => setSearchTerm('')}
-                className="mt-6 text-xs uppercase tracking-widest text-mystic-purple hover:text-white transition-colors border-b border-mystic-purple/30 hover:border-white"
+                className="mt-4 text-xs uppercase font-bold text-mystic-gold hover:text-white transition-colors"
               >
-                Ver todo el catálogo
+                Limpiar filtros
               </button>
             </motion.div>
           )}

@@ -81,39 +81,45 @@ const MainLayout: React.FC = () => {
 
       {/* Act 3: Main Content Entry */}
       {appState === 'content' && (
-        <motion.div
-          key="main-content"
-          initial={{ scale: 1.1, filter: "blur(12px)", opacity: 0 }}
-          animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="relative"
-        >
+        <>
+          {/* Fixed Elements outside transformed container to preserve positioning */}
           <StarBackground />
-          
-          <main>
-            <Hero />
-            <About />
-            <Education />
-            <Catalog />
-          </main>
 
+          <motion.div
+            key="main-content"
+            initial={{ scale: 1.1, filter: "blur(12px)", opacity: 0 }}
+            animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="relative z-10"
+          >
+            <main>
+              <Hero />
+              <About />
+              <Education />
+              <Catalog />
+            </main>
+            
+            <Footer 
+              onOpenLogin={() => setShowLogin(true)} 
+              onOpenDashboard={() => setShowDashboard(true)} 
+            />
+          </motion.div>
+
+          {/* Overlays */}
           <FloatingContact />
           
-          <Footer 
-            onOpenLogin={() => setShowLogin(true)} 
-            onOpenDashboard={() => setShowDashboard(true)} 
-          />
-
           <AdminLogin 
             isOpen={showLogin} 
             onClose={() => setShowLogin(false)} 
             onSuccess={() => setShowDashboard(true)}
           />
 
-          {showDashboard && (
-            <AdminDashboard onClose={() => setShowDashboard(false)} />
-          )}
-        </motion.div>
+          <AnimatePresence>
+            {showDashboard && (
+              <AdminDashboard onClose={() => setShowDashboard(false)} />
+            )}
+          </AnimatePresence>
+        </>
       )}
     </div>
   );

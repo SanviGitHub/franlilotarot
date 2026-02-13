@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Ritual, CandleType } from '../types';
+import { CANDLE_INFO } from '../constants';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import { Instagram } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
 interface RitualCardProps {
   ritual: Ritual;
@@ -23,8 +24,32 @@ const RitualCard: React.FC<RitualCardProps> = ({ ritual }) => {
   const formattedPrice = price.toLocaleString('es-AR');
 
   const handleConsult = () => {
-    // Redirección directa al perfil de Instagram
-    window.open('https://www.instagram.com/franlilotarot', '_blank');
+    // 1. Obtener información detallada de la potencia seleccionada
+    const candleInfo = CANDLE_INFO.find(c => c.type === selectedType);
+    const candleTitle = candleInfo ? candleInfo.title : selectedType;
+
+    // 2. Construir el mensaje Premium
+    const phoneNumber = "5492212003424";
+    
+    // Usamos emojis universales y aseguramos la codificación
+    const message = `Hola Franlilo 🔮, vengo de tu web sagrada.
+
+Siento el llamado para solicitar el ritual:
+✨ *${ritual.name.toUpperCase()}*
+📂 Categoría: _${ritual.category}_
+
+He seleccionado la potencia:
+🕯️ *${candleTitle}*
+💰 Inversión: *$${formattedPrice} ARS*
+
+Entiendo que este trabajo está destinado a:
+_"${ritual.description}"_
+
+Quedo a la espera de tu guía para coordinar el pago y dar inicio a la energía.`;
+
+    // 3. Redirigir a WhatsApp usando la API completa para evitar problemas de codificación con emojis
+    const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
   };
 
   // Mouse move effect for border glow
@@ -124,10 +149,10 @@ const RitualCard: React.FC<RitualCardProps> = ({ ritual }) => {
         
         <button 
           onClick={handleConsult}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#8a3ab9] to-[#bc1888] hover:from-mystic-gold hover:to-yellow-500 hover:text-black text-white py-3.5 rounded-sm font-sans font-bold tracking-wider text-sm transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(188,24,136,0.4)] hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]"
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-green-900 to-green-700 hover:from-mystic-gold hover:to-yellow-500 hover:text-black text-white py-3.5 rounded-sm font-sans font-bold tracking-wider text-sm transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(20,83,45,0.4)] hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]"
         >
-          <Instagram size={18} />
-          SOLICITAR RITUAL
+          <MessageCircle size={18} />
+          SOLICITAR POR WHATSAPP
         </button>
       </div>
     </motion.div>
