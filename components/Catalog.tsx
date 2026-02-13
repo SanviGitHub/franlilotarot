@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import RitualCard from './RitualCard';
 import { Category } from '../types';
@@ -16,13 +16,32 @@ const categories: (Category | 'Todo')[] = [
   'Salud'
 ];
 
+// Utility: Normalize string to remove accents, lowercase, and trim for safe comparison
+// Ensures "Protección" matches "Proteccion", "protección", etc.
+const normalizeStr = (str: string): string => {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
+};
+
 const Catalog: React.FC = () => {
   const { rituals } = useApp();
   const [filter, setFilter] = useState<Category | 'Todo'>('Todo');
 
-  const filteredRituals = filter === 'Todo' 
-    ? rituals 
-    : rituals.filter(r => r.category === filter);
+  // Memoized filtering logic for instant reactivity and performance
+  const filteredRituals = useMemo(() => {
+    if (filter === 'Todo') return rituals;
+
+    const normalizedFilter = normalizeStr(filter);
+
+    return rituals.filter(r => {
+      // Safety check: ensure category exists before normalizing
+      const ritualCategory = r.category ? normalizeStr(r.category) : '';
+      return ritualCategory === normalizedFilter;
+    });
+  }, [rituals, filter]);
 
   return (
     <section id="catalogo" className="py-24 px-6 relative z-10 bg-mystic-black min-h-screen">
@@ -64,15 +83,23 @@ const Catalog: React.FC = () => {
           </AnimatePresence>
         </motion.div>
         
-        {filteredRituals.length === 0 && (
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }}
-            className="text-center text-gray-500 mt-12 italic"
-          >
-            No hay rituales en esta categoría por el momento.
-          </motion.p>
-        )}
+        {/* Safe Fallback UI */}
+        <AnimatePresence>
+          {filteredRituals.length === 0 && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }} 
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center py-12 px-4 border border-white/5 bg-white/5 rounded-sm max-w-lg mx-auto mt-8"
+            >
+              <p className="text-mystic-gold font-serif text-xl mb-2">Categoría en Preparación</p>
+              <p className="text-gray-400 text-sm font-sans italic">
+                Aún no hay rituales disponibles en <span className="text-white font-bold">"{filter}"</span>. 
+                <br/>Estamos canalizando nuevas energías para esta sección.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

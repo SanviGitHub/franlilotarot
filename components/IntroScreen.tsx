@@ -136,8 +136,9 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
     >
       <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-60" />
       
+      {/* Added significant padding (px-12 py-20) to prevent glow clipping */}
       <motion.div
-        className="relative z-10 flex overflow-hidden"
+        className="relative z-10 flex overflow-hidden px-12 py-20"
         variants={container}
         initial="hidden"
         animate="visible"
@@ -148,7 +149,9 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onComplete }) => {
             key={index}
             variants={child}
             className={`text-4xl md:text-7xl font-serif font-bold ${letter === ' ' ? 'mr-4' : ''} text-transparent bg-clip-text bg-gradient-to-b from-mystic-gold via-white to-mystic-purple drop-shadow-[0_0_15px_rgba(212,175,55,0.6)]`}
-            style={{ textShadow: "0 0 20px rgba(107,33,168,0.8)" }}
+            style={{ 
+              textShadow: "0 0 30px rgba(107,33,168,0.8), 0 0 60px rgba(107,33,168,0.4)" 
+            }}
           >
             {letter}
           </motion.span>
