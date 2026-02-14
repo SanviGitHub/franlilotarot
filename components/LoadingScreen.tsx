@@ -94,7 +94,7 @@ const LoadingScreen: React.FC = () => {
              <span className="text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-1 group-hover:text-mystic-purple transition-colors">Creado por</span>
              <div className="relative">
                 <span className="text-lg font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-mystic-gold via-white to-mystic-purple animate-pulse drop-shadow-[0_0_10px_rgba(212,175,55,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(168,85,247,0.8)] transition-all">
-                  @santinooviana
+                  @astromistica.sanvy
                 </span>
              </div>
            </div>
