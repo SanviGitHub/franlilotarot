@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useAnimate } from 'framer-motion';
+import { Instagram } from 'lucide-react';
 
 const LoadingScreen: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -148,7 +149,7 @@ const LoadingScreen: React.FC = () => {
 
       {/* --- NUMERIC COUNTER --- */}
       <motion.div 
-        className="absolute bottom-24 z-20"
+        className="absolute bottom-32 z-20"
         exit={{ opacity: 0, y: 20 }}
       >
         <span className="text-4xl md:text-5xl font-serif text-mystic-gold/20 font-bold tabular-nums">
@@ -157,23 +158,23 @@ const LoadingScreen: React.FC = () => {
         <span className="text-sm text-mystic-gold/20 align-top ml-1">%</span>
       </motion.div>
 
-      {/* --- CREDITS (Subtle) --- */}
+      {/* --- CREDITS: Created By --- */}
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
-        transition={{ delay: 1 }}
-        className="absolute bottom-6 right-6 z-50"
+        transition={{ delay: 0.8 }}
+        className="absolute bottom-10 z-50 flex flex-col items-center"
       >
         <a 
-          href="https://www.instagram.com/santinooviana" 
+          href="https://www.instagram.com/astromistica.sanvy" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="group flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity duration-500"
+          className="flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-sm hover:bg-white/10 hover:border-mystic-gold/30 transition-all duration-500 group shadow-lg hover:shadow-mystic-gold/10"
         >
-           <div className="h-[1px] w-8 bg-gray-600 group-hover:bg-mystic-gold transition-colors" />
-           <span className="text-[9px] uppercase tracking-widest text-gray-400 group-hover:text-white">
-             Dev by Santino
+           <Instagram size={14} className="text-mystic-gold group-hover:scale-110 transition-transform" />
+           <span className="text-[10px] uppercase tracking-widest text-gray-400 group-hover:text-white transition-colors">
+             Creado por <span className="font-bold text-mystic-gold ml-1">@astromistica.sanvy</span>
            </span>
         </a>
       </motion.div>
