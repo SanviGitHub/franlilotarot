@@ -3,6 +3,7 @@ import { AppProvider } from './context/AppContext';
 import StarBackground from './components/StarBackground';
 import Hero from './components/Hero';
 import About from './components/About';
+import Testimonials from './components/Testimonials';
 import Education from './components/Education';
 import Catalog from './components/Catalog';
 import Footer from './components/Footer';
@@ -10,11 +11,10 @@ import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
 import FloatingContact from './components/FloatingContact';
 import LoadingScreen from './components/LoadingScreen';
-import IntroScreen from './components/IntroScreen';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// Sequence States
-type AppState = 'loading' | 'intro' | 'content';
+// Sequence States - Removed 'intro'
+type AppState = 'loading' | 'content';
 
 const MainLayout: React.FC = () => {
   const [appState, setAppState] = useState<AppState>('loading');
@@ -39,12 +39,13 @@ const MainLayout: React.FC = () => {
     };
 
     // 3. Asset Loading + Min Wait time
-    const minLoadTime = new Promise(resolve => setTimeout(resolve, 2500));
+    // Reduced wait time slightly since we removed the intro
+    const minLoadTime = new Promise(resolve => setTimeout(resolve, 2000));
     const imagesLoaded = Promise.all(imageUrls.map(preloadImage));
 
     Promise.all([minLoadTime, imagesLoaded]).then(() => {
-      // Act 1 Complete -> Trigger Transition to Act 2
-      setAppState('intro');
+      // Direct transition to content
+      setAppState('content');
     });
 
     // --- Admin Event Listeners ---
@@ -60,11 +61,6 @@ const MainLayout: React.FC = () => {
     };
   }, []);
 
-  const handleIntroComplete = () => {
-    // Act 2 Complete -> Trigger Act 3
-    setAppState('content');
-  };
-
   return (
     <div className="min-h-screen bg-mystic-black text-gray-100 font-sans selection:bg-mystic-purple selection:text-white overflow-x-hidden">
       <AnimatePresence mode="wait">
@@ -72,14 +68,9 @@ const MainLayout: React.FC = () => {
         {appState === 'loading' && (
           <LoadingScreen key="loading" />
         )}
-
-        {/* Act 2: Intersticial "Franlilo Brujo" */}
-        {appState === 'intro' && (
-          <IntroScreen key="intro" onComplete={handleIntroComplete} />
-        )}
       </AnimatePresence>
 
-      {/* Act 3: Main Content Entry */}
+      {/* Act 2: Main Content Entry (Formerly Act 3) */}
       {appState === 'content' && (
         <>
           {/* Fixed Elements outside transformed container to preserve positioning */}
@@ -87,14 +78,15 @@ const MainLayout: React.FC = () => {
 
           <motion.div
             key="main-content"
-            initial={{ scale: 1.1, filter: "blur(12px)", opacity: 0 }}
-            animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             className="relative z-10"
           >
             <main>
               <Hero />
               <About />
+              <Testimonials />
               <Education />
               <Catalog />
             </main>

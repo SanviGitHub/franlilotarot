@@ -1,105 +1,183 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useAnimate } from 'framer-motion';
 
 const LoadingScreen: React.FC = () => {
+  const [progress, setProgress] = useState(0);
+  const [scope, animate] = useAnimate();
+
+  // Simulate loading progress
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(timer);
+          return 100;
+        }
+        // Random increments for organic feel
+        return prev + Math.floor(Math.random() * 5) + 1; 
+      });
+    }, 50);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <motion.div 
+      ref={scope}
       className="fixed inset-0 z-[100] bg-mystic-black flex flex-col items-center justify-center overflow-hidden"
-      exit={{ opacity: 0, transition: { duration: 0.8, delay: 0.4 } }}
+      exit={{ 
+        opacity: 0, 
+        transition: { duration: 0.8, delay: 0.2 } 
+      }}
     >
-      {/* Act 1 Climax: The Golden Reveal Mask */}
+      {/* --- CINEMATIC EXIT REVEAL --- 
+          Instead of a solid ball, this is a light flash overlay */}
       <motion.div
-        className="absolute z-50 bg-mystic-gold rounded-full pointer-events-none"
-        initial={{ width: 0, height: 0, opacity: 1 }}
+        className="absolute inset-0 z-50 pointer-events-none bg-white mix-blend-overlay"
+        initial={{ opacity: 0 }}
         exit={{ 
-          width: '250vmax', 
-          height: '250vmax', 
-          opacity: 0, // Fades out to reveal the Black Intro Screen behind it
+          opacity: [0, 1, 0], // Flash effect
+          scale: [1, 1.5],
           transition: { duration: 0.8, ease: "easeInOut" } 
         }}
       />
+      
+      {/* --- AMBIENT BACKGROUND --- */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-mystic-purple/10 via-black to-black opacity-60 animate-pulse-slow" />
+      
+      {/* Floating Particles (CSS based for performance) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(10)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute bg-mystic-gold rounded-full opacity-20 blur-[1px]"
+            initial={{ 
+              x: Math.random() * window.innerWidth, 
+              y: window.innerHeight + 10,
+              scale: Math.random() * 0.5 + 0.2
+            }}
+            animate={{ 
+              y: -100,
+              opacity: [0, 0.5, 0]
+            }}
+            transition={{ 
+              duration: Math.random() * 3 + 2, 
+              repeat: Infinity, 
+              ease: "linear",
+              delay: Math.random() * 2
+            }}
+            style={{ width: Math.random() * 4 + 1, height: Math.random() * 4 + 1 }}
+          />
+        ))}
+      </div>
 
-      <div className="relative flex items-center justify-center z-10">
-        {/* Animated Rings - Exit quickly */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          exit={{ scale: 0, opacity: 0, transition: { duration: 0.3 } }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute border border-mystic-gold/20 rounded-full w-64 h-64"
-        />
-        <motion.div
-          animate={{ rotate: -360 }}
-          exit={{ scale: 0, opacity: 0, transition: { duration: 0.3 } }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-          className="absolute border border-mystic-purple/20 rounded-full w-80 h-80"
-        />
+      {/* --- SACRED GEOMETRY CENTERPIECE --- */}
+      <div className="relative flex items-center justify-center scale-75 md:scale-100">
         
-        {/* Glow Background */}
+        {/* Core Glow */}
         <motion.div 
-          exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-mystic-gold/5 blur-3xl rounded-full scale-150 animate-pulse-slow" 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute w-32 h-32 bg-mystic-gold/10 rounded-full blur-2xl"
         />
 
-        {/* Content */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ scale: 1.5, opacity: 0, filter: "blur(10px)", transition: { duration: 0.4 } }}
-          transition={{ duration: 1, repeat: Infinity, repeatType: "reverse" }}
-          className="text-center relative z-10 p-8"
+        {/* Outer Ring - Dashed & Slow */}
+        <motion.svg 
+          viewBox="0 0 200 200" 
+          className="absolute w-80 h-80 opacity-30"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         >
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-mystic-gold mb-3 text-glow tracking-tighter">
-            Franlilo
-          </h1>
-          <p className="text-gray-400 font-sans tracking-[0.4em] text-xs uppercase border-t border-gray-800 pt-3 mt-1">
-            Alta Magia
+           <circle cx="100" cy="100" r="98" fill="none" stroke="url(#goldGrad)" strokeWidth="0.5" strokeDasharray="4 8" />
+           <defs>
+             <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+               <stop offset="0%" stopColor="#d4af37" stopOpacity="0" />
+               <stop offset="50%" stopColor="#d4af37" stopOpacity="1" />
+               <stop offset="100%" stopColor="#d4af37" stopOpacity="0" />
+             </linearGradient>
+           </defs>
+        </motion.svg>
+
+        {/* Middle Ring - Runes/Geometric */}
+        <motion.svg 
+          viewBox="0 0 200 200" 
+          className="absolute w-64 h-64 opacity-60"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+           <circle cx="100" cy="100" r="90" fill="none" stroke="#6b21a8" strokeWidth="0.8" />
+           {/* Geometric details simulating sigils */}
+           <path d="M100 10 L190 100 L100 190 L10 100 Z" fill="none" stroke="#6b21a8" strokeWidth="0.5" opacity="0.5" />
+           <rect x="58" y="58" width="84" height="84" fill="none" stroke="#6b21a8" strokeWidth="0.5" opacity="0.5" transform="rotate(45 100 100)" />
+        </motion.svg>
+
+        {/* Inner Ring - Fast & Bright */}
+        <motion.svg 
+          viewBox="0 0 100 100" 
+          className="absolute w-40 h-40"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+        >
+           <circle cx="50" cy="50" r="45" fill="none" stroke="#d4af37" strokeWidth="1" strokeDasharray="60 120" strokeLinecap="round" />
+        </motion.svg>
+
+        {/* Center Text/Logo */}
+        <motion.div
+          className="relative z-10 flex flex-col items-center justify-center backdrop-blur-[2px]"
+          exit={{ scale: 0.8, opacity: 0, filter: "blur(10px)", transition: { duration: 0.5 } }}
+        >
+          <motion.h1 
+            initial={{ opacity: 0, letterSpacing: '0.5em' }}
+            animate={{ opacity: 1, letterSpacing: '0.2em' }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="text-2xl md:text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-b from-mystic-gold to-yellow-100 drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]"
+          >
+            FRANLILO
+          </motion.h1>
+          
+          <motion.div 
+            className="h-[1px] w-0 bg-gradient-to-r from-transparent via-mystic-purple to-transparent mt-2 mb-2"
+            animate={{ w: '100%', width: 100 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
+
+          <p className="text-[10px] text-gray-500 font-sans uppercase tracking-[0.3em]">
+             Sincronizando
           </p>
         </motion.div>
       </div>
 
-      {/* Loading Bar */}
+      {/* --- NUMERIC COUNTER --- */}
       <motion.div 
-        exit={{ opacity: 0 }}
-        className="mt-16 w-48 h-[2px] bg-gray-900 rounded-full overflow-hidden relative z-10"
-      >
-        <motion.div 
-          className="absolute top-0 left-0 h-full bg-gradient-to-r from-transparent via-mystic-gold to-transparent w-1/2"
-          animate={{ x: [-200, 200] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </motion.div>
-      
-      <motion.p 
-        exit={{ opacity: 0 }}
-        className="mt-4 text-[10px] text-gray-600 font-sans animate-pulse z-10"
-      >
-        Cargando energías...
-      </motion.p>
-
-      {/* Credits - Wow Effect */}
-      <motion.div 
-        initial={{ opacity: 0, y: 50, rotateX: 90 }}
-        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+        className="absolute bottom-24 z-20"
         exit={{ opacity: 0, y: 20 }}
-        transition={{ delay: 0.5, duration: 1, type: "spring" }}
-        className="absolute bottom-8 right-8 z-50 perspective-1000"
+      >
+        <span className="text-4xl md:text-5xl font-serif text-mystic-gold/20 font-bold tabular-nums">
+          {Math.min(progress, 100)}
+        </span>
+        <span className="text-sm text-mystic-gold/20 align-top ml-1">%</span>
+      </motion.div>
+
+      {/* --- CREDITS (Subtle) --- */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ delay: 1 }}
+        className="absolute bottom-6 right-6 z-50"
       >
         <a 
           href="https://www.instagram.com/santinooviana" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="group relative block transform transition-all duration-500 hover:scale-110 hover:rotate-2"
+          className="group flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity duration-500"
         >
-           <div className="flex flex-col items-end">
-             <span className="text-[9px] uppercase tracking-[0.3em] text-gray-500 mb-1 group-hover:text-mystic-purple transition-colors">Creado por</span>
-             <div className="relative">
-                <span className="text-lg font-serif italic font-bold text-transparent bg-clip-text bg-gradient-to-r from-mystic-gold via-white to-mystic-purple animate-pulse drop-shadow-[0_0_10px_rgba(212,175,55,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(168,85,247,0.8)] transition-all">
-                  @santinooviana
-                </span>
-             </div>
-           </div>
+           <div className="h-[1px] w-8 bg-gray-600 group-hover:bg-mystic-gold transition-colors" />
+           <span className="text-[9px] uppercase tracking-widest text-gray-400 group-hover:text-white">
+             Dev by Santino
+           </span>
         </a>
       </motion.div>
+
     </motion.div>
   );
 };

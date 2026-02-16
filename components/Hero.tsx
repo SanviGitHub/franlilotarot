@@ -44,6 +44,15 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-mystic-black z-10 pointer-events-none" />
         <motion.div 
           style={{ y, opacity }}
+          animate={{ 
+            scale: [1, 1.05, 1],
+            x: [0, 10, 0]
+          }}
+          transition={{ 
+            duration: 20, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
           className="absolute inset-0 w-full h-full"
         >
           <img 
@@ -78,18 +87,18 @@ const Hero: React.FC = () => {
           
           <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
             <motion.button 
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(212,175,55,0.4)" }}
               whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-12 py-4 bg-mystic-gold text-black font-bold tracking-widest text-sm uppercase rounded-sm hover:bg-white transition-colors shadow-lg shadow-mystic-gold/10"
+              className="px-12 py-4 bg-mystic-gold text-black font-bold tracking-widest text-sm uppercase rounded-sm hover:bg-white transition-all shadow-lg shadow-mystic-gold/10"
             >
               Ver Servicios
             </motion.button>
             <motion.button 
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
               whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-12 py-4 bg-transparent border border-white/20 text-white font-bold tracking-widest text-sm uppercase rounded-sm hover:bg-white/5 transition-colors"
+              className="px-12 py-4 bg-transparent border border-white/20 text-white font-bold tracking-widest text-sm uppercase rounded-sm hover:bg-white/5 transition-all"
             >
               Trayectoria
             </motion.button>
