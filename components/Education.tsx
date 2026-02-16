@@ -20,9 +20,20 @@ const Education: React.FC = () => {
               key={candle.type}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              // Floating animation
+              animate={{ y: [0, -8, 0] }}
+              transition={{ 
+                delay: idx * 0.1, 
+                duration: 0.5, // Entry duration
+                y: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: idx * 0.5 // Stagger the float phase
+                }
+              }}
               viewport={{ once: true }}
-              className="bg-[#111] p-6 rounded-sm border border-white/5 hover:border-mystic-gold/30 transition-colors"
+              className="bg-[#111] p-6 rounded-sm border border-white/5 hover:border-mystic-gold/30 transition-colors shadow-lg hover:shadow-mystic-gold/5"
             >
               <div className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Nivel 0{idx + 1}</div>
               <h3 className="text-lg font-serif text-white mb-2">{candle.title}</h3>

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { AppProvider } from './context/AppContext';
 import StarBackground from './components/StarBackground';
+import ScrollProgress from './components/ScrollProgress';
 import Hero from './components/Hero';
 import About from './components/About';
+import Process from './components/Process';
 import Testimonials from './components/Testimonials';
 import Education from './components/Education';
 import Catalog from './components/Catalog';
+import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AdminLogin from './components/AdminLogin';
 import AdminDashboard from './components/AdminDashboard';
@@ -13,7 +16,7 @@ import FloatingContact from './components/FloatingContact';
 import LoadingScreen from './components/LoadingScreen';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// Sequence States - Removed 'intro'
+// Sequence States
 type AppState = 'loading' | 'content';
 
 const MainLayout: React.FC = () => {
@@ -39,7 +42,6 @@ const MainLayout: React.FC = () => {
     };
 
     // 3. Asset Loading + Min Wait time
-    // Reduced wait time slightly since we removed the intro
     const minLoadTime = new Promise(resolve => setTimeout(resolve, 2000));
     const imagesLoaded = Promise.all(imageUrls.map(preloadImage));
 
@@ -63,6 +65,9 @@ const MainLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-mystic-black text-gray-100 font-sans selection:bg-mystic-purple selection:text-white overflow-x-hidden">
+      {/* Cinematic Grain Overlay */}
+      <div className="bg-grain" />
+
       <AnimatePresence mode="wait">
         {/* Act 1: Loading Screen */}
         {appState === 'loading' && (
@@ -70,9 +75,11 @@ const MainLayout: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Act 2: Main Content Entry (Formerly Act 3) */}
+      {/* Act 2: Main Content Entry */}
       {appState === 'content' && (
         <>
+          <ScrollProgress />
+          
           {/* Fixed Elements outside transformed container to preserve positioning */}
           <StarBackground />
 
@@ -85,10 +92,12 @@ const MainLayout: React.FC = () => {
           >
             <main>
               <Hero />
+              <Process />
               <About />
               <Testimonials />
               <Education />
               <Catalog />
+              <FAQ />
             </main>
             
             <Footer 

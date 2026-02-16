@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Lock, ShieldCheck } from 'lucide-react';
+import { ArrowDown, Lock, ShieldCheck, Star } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const Hero: React.FC = () => {
@@ -45,11 +45,10 @@ const Hero: React.FC = () => {
         <motion.div 
           style={{ y, opacity }}
           animate={{ 
-            scale: [1, 1.05, 1],
-            x: [0, 10, 0]
+            scale: [1, 1.1, 1],
           }}
           transition={{ 
-            duration: 20, 
+            duration: 25, 
             repeat: Infinity, 
             ease: "easeInOut" 
           }}
@@ -63,42 +62,54 @@ const Hero: React.FC = () => {
         </motion.div>
       </div>
 
-      <div className="relative z-20 text-center max-w-4xl mx-auto mt-10">
+      <div className="relative z-20 text-center max-w-5xl mx-auto mt-10">
         <motion.div
           style={{ y: textY }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
-          <div className="flex justify-center items-center gap-2 mb-6">
+          <div className="flex justify-center items-center gap-2 mb-8">
              <ShieldCheck className="text-mystic-gold w-4 h-4" />
-             <h2 className="text-gray-400 text-xs md:text-sm font-sans tracking-[0.4em] uppercase border border-white/10 px-4 py-1 rounded-full bg-black/50 backdrop-blur-md">
-               Servicios Esotéricos Premium
+             <h2 className="text-gray-400 text-[10px] md:text-xs font-sans tracking-[0.4em] uppercase border border-white/10 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md shadow-lg shadow-mystic-gold/5">
+               Alta Magia & Esoterismo Premium
              </h2>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 tracking-tight leading-tight drop-shadow-2xl">
-            Franlilo Tarot
-          </h1>
+          <div className="relative inline-block mb-6">
+            <motion.div 
+              className="absolute -inset-10 bg-mystic-purple/20 blur-[60px] rounded-full"
+              animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.8, 1.2, 0.8] }}
+              transition={{ duration: 5, repeat: Infinity }}
+            />
+            <h1 className="relative text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-white tracking-tighter leading-[0.9] drop-shadow-2xl">
+              Franlilo <br />
+              <span className="animate-text-shimmer bg-clip-text text-transparent bg-gradient-to-r from-mystic-gold via-yellow-200 to-mystic-gold">
+                Tarot
+              </span>
+            </h1>
+          </div>
           
-          <p className="text-gray-300 font-sans text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-            Soluciones de alta efectividad en retornos de pareja, limpiezas y apertura de caminos. Discreción absoluta y resultados profesionales.
+          <p className="text-gray-300 font-sans text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed font-light mix-blend-screen">
+            Soluciones de alta efectividad en retornos de pareja, limpiezas y apertura de caminos. <br className="hidden md:block"/>
+            <span className="italic text-mystic-gold/80">Discreción absoluta y resultados profesionales.</span>
           </p>
           
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-5 justify-center items-center">
             <motion.button 
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(212,175,55,0.4)" }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(212,175,55,0.3)" }}
               whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-12 py-4 bg-mystic-gold text-black font-bold tracking-widest text-sm uppercase rounded-sm hover:bg-white transition-all shadow-lg shadow-mystic-gold/10"
+              className="px-10 py-4 bg-mystic-gold text-black font-bold tracking-[0.2em] text-xs uppercase rounded-sm hover:bg-white transition-all shadow-lg shadow-mystic-gold/10 relative overflow-hidden group"
             >
-              Ver Servicios
+              <span className="relative z-10">Ver Servicios</span>
+              <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-500 skew-x-12" />
             </motion.button>
             <motion.button 
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.4)" }}
               whileTap={{ scale: 0.98 }}
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-12 py-4 bg-transparent border border-white/20 text-white font-bold tracking-widest text-sm uppercase rounded-sm hover:bg-white/5 transition-all"
+              className="px-10 py-4 bg-transparent border border-white/10 text-white font-bold tracking-[0.2em] text-xs uppercase rounded-sm transition-all"
             >
               Trayectoria
             </motion.button>
@@ -107,11 +118,13 @@ const Hero: React.FC = () => {
       </div>
 
       <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 text-gray-500"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 10, 0] }}
+        transition={{ delay: 2, duration: 2, repeat: Infinity }}
       >
-        <ArrowDown size={24} />
+        <span className="text-[10px] uppercase tracking-[0.3em] text-mystic-gold/70">Descubre</span>
+        <ArrowDown size={20} className="text-mystic-gold/70" />
       </motion.div>
     </section>
   );
