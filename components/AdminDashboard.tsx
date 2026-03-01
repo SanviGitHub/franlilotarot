@@ -16,6 +16,15 @@ const emptyRitual: Ritual = {
   prices: { '1d': 0, '3d': 0, 'VDF': 0, '7d': 0 }
 };
 
+const CATEGORIES: Category[] = [
+  'Amor', 
+  'Limpieza', 
+  'Protecciones', 
+  'Trabajo de Dinero', 
+  'Trabajo de Magia Negra', 
+  'Diferentes Trabajos'
+];
+
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   const { rituals, updateRitual, addRitual, resetRituals } = useApp();
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -121,7 +130,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                    <div>
                      <label className="block text-xs text-gray-500 mb-1">Categoría</label>
                      <select value={formData.category} onChange={(e) => handleChange('category', e.target.value)} className="w-full bg-black border border-gray-700 p-3 rounded text-gray-400">
-                        {['Amor', 'Limpieza', 'Protección', 'Dominio', 'Apertura'].map(c => <option key={c} value={c}>{c}</option>)}
+                        {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                      </select>
                    </div>
                    <div className="md:col-span-2">
@@ -184,7 +193,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                               onChange={(e) => handleChange('category', e.target.value)}
                               className="w-full bg-black border border-gray-700 p-2 rounded text-gray-400 text-xs"
                             >
-                              {['Amor', 'Limpieza', 'Protección', 'Dominio', 'Apertura'].map(c => <option key={c} value={c}>{c}</option>)}
+                              {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                             </select>
                           </div>
                         ) : (
@@ -192,7 +201,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                             <p className="font-bold text-white text-lg">{ritual.name}</p>
                             <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                               ritual.category === 'Amor' ? 'border-pink-900 text-pink-500' :
-                              ritual.category === 'Dominio' ? 'border-red-900 text-red-500' :
+                              ritual.category === 'Trabajo de Magia Negra' ? 'border-red-900 text-red-500' :
+                              ritual.category === 'Trabajo de Dinero' ? 'border-mystic-gold/50 text-mystic-gold' :
+                              ritual.category === 'Protecciones' ? 'border-blue-900 text-blue-500' :
+                              ritual.category === 'Limpieza' ? 'border-emerald-900 text-emerald-500' :
+                              ritual.category === 'Diferentes Trabajos' ? 'border-purple-900 text-purple-500' :
                               'border-gray-800 text-gray-500'
                             }`}>
                               {ritual.category}

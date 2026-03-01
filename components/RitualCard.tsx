@@ -88,7 +88,15 @@ Quedo a la espera de tu guía para coordinar el pago y dar inicio a la energía.
 
       <div className="p-6 flex-grow relative z-10">
         <div className="flex justify-between items-start mb-3">
-           <span className="text-[10px] font-bold uppercase text-mystic-purple tracking-widest border border-mystic-purple/30 px-2 py-1 rounded-sm bg-black/50 backdrop-blur-md">
+           <span className={`text-[10px] font-bold uppercase tracking-widest border px-2 py-1 rounded-sm bg-black/50 backdrop-blur-md ${
+             ritual.category === 'Amor' ? 'border-pink-900/50 text-pink-500' :
+             ritual.category === 'Trabajo de Magia Negra' ? 'border-red-900/50 text-red-500' :
+             ritual.category === 'Trabajo de Dinero' ? 'border-mystic-gold/30 text-mystic-gold' :
+             ritual.category === 'Protecciones' ? 'border-blue-900/50 text-blue-500' :
+             ritual.category === 'Limpieza' ? 'border-emerald-900/50 text-emerald-500' :
+             ritual.category === 'Diferentes Trabajos' ? 'border-purple-900/50 text-purple-500' :
+             'border-mystic-purple/30 text-mystic-purple'
+           }`}>
             {ritual.category}
            </span>
            {ritual.popular && (

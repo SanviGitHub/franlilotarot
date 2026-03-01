@@ -57,7 +57,7 @@ export const INITIAL_RITUALS: Ritual[] = [
     prices: { '1d': 0, '3d': 0, 'VDF': 10000, '7d': 0 }
   },
 
-  // --- LIMPIEZA & PROTECCIÓN ---
+  // --- LIMPIEZA & PROTECCIONES ---
   {
     id: 'limpieza-energetica',
     name: 'Limpieza Energética',
@@ -104,103 +104,103 @@ export const INITIAL_RITUALS: Ritual[] = [
     id: 'proteccion',
     name: 'Protección Personal',
     description: 'Escudo energético contra envidias, mal de ojo y vibraciones bajas.',
-    category: 'Protección',
+    category: 'Protecciones',
     prices: { '1d': 5000, '3d': 15000, 'VDF': 25000, '7d': 35000 }
   },
   {
     id: 'proteccion-vinculo',
     name: 'Protección al Vínculo',
     description: 'Resguarda la relación de influencias externas negativas y terceros.',
-    category: 'Protección',
+    category: 'Protecciones',
     prices: { '1d': 10000, '3d': 25000, 'VDF': 35000, '7d': 45000 }
   },
   {
     id: 'trabajo-ajo',
     name: 'Trabajo de Ajo',
     description: 'Para limpiarte, protegerte, y que toda persona que te envidie se resfríe.',
-    category: 'Protección',
+    category: 'Protecciones',
     prices: { '1d': 10000, '3d': 0, 'VDF': 0, '7d': 0 }
   },
   {
     id: 'congelamiento',
     name: 'Congelamiento',
     description: 'Para que una persona se aleje, o para congelar sentimientos o maldades hacia vos.',
-    category: 'Protección',
+    category: 'Protecciones',
     prices: { '1d': 0, '3d': 0, 'VDF': 15000, '7d': 0 }
   },
   {
     id: 'separacion-terceros',
     name: 'Separación de Terceros',
     description: 'Aleja intrusos o personas que interfieren. Corte definitivo.',
-    category: 'Protección',
+    category: 'Protecciones',
     prices: { '1d': 0, '3d': 0, 'VDF': 15000, '7d': 0 }
   },
 
-  // --- APERTURA & PROSPERIDAD ---
+  // --- DIFERENTES TRABAJOS & DINERO ---
   {
     id: 'abrecaminos-general',
     name: 'Abrecaminos General',
     description: 'Destrabe para avanzar en la vida y eliminar la mala racha.',
-    category: 'Apertura',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 5000, '3d': 15000, 'VDF': 25000, '7d': 35000 }
   },
   {
     id: 'abrecaminos-amor',
     name: 'Abrecaminos en el Amor',
     description: 'Atrae nuevas oportunidades amorosas y renueva tu magnetismo.',
-    category: 'Apertura',
+    category: 'Amor',
     prices: { '1d': 5000, '3d': 15000, 'VDF': 25000, '7d': 35000 }
   },
   {
     id: 'atraccion',
     name: 'Atracción Magnética',
     description: 'Para hacer que las personas a tu alrededor se sientan atraídas hacia vos.',
-    category: 'Apertura',
+    category: 'Amor',
     prices: { '1d': 10000, '3d': 25000, 'VDF': 30000, '7d': 40000 }
   },
   {
     id: 'comunicacion',
     name: 'Trabajo de Comunicación',
     description: 'Desbloquea el diálogo y permite que fluyan las palabras y el entendimiento.',
-    category: 'Apertura',
+    category: 'Amor',
     prices: { '1d': 10000, '3d': 25000, 'VDF': 35000, '7d': 45000 }
   },
   {
     id: 'trabajo-estudio',
     name: 'Trabajo de Estudio',
     description: 'Foco, memoria y éxito académico para exámenes o carreras.',
-    category: 'Apertura',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 5000, '3d': 15000, 'VDF': 25000, '7d': 35000 }
   },
   {
     id: 'trabajo-prosperidad',
     name: 'Trabajo de Prosperidad',
     description: 'Potenciador para metas materiales concretas (ej. comprarse un auto).',
-    category: 'Prosperidad',
+    category: 'Trabajo de Dinero',
     prices: { '1d': 0, '3d': 0, 'VDF': 15000, '7d': 0 }
   },
   {
     id: 'venta-propiedad',
     name: 'Venta de Hogar/Terreno',
     description: 'Energía focalizada para acelerar transacciones inmobiliarias.',
-    category: 'Prosperidad',
+    category: 'Trabajo de Dinero',
     prices: { '1d': 0, '3d': 0, 'VDF': 25000, '7d': 0 }
   },
   {
     id: 'combo-completo',
     name: 'Combo: Abrecaminos + Autoendulzamiento + Atracción + Empoderamiento',
     description: 'Paquete completo para renovar tu energía amorosa y magnética.',
-    category: 'Apertura',
+    category: 'Diferentes Trabajos',
     popular: true,
     prices: { '1d': 0, '3d': 0, 'VDF': 35000, '7d': 0 }
   },
 
-  // --- DOMINIO & MAGIA FUERTE ---
+  // --- TRABAJO DE MAGIA NEGRA ---
   {
     id: 'amarres',
     name: 'Amarres de Amor',
     description: 'Vinculación energética fuerte para asegurar la permanencia de la pareja.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     popular: true,
     prices: { '1d': 15000, '3d': 35000, 'VDF': 45000, '7d': 65000 }
   },
@@ -208,88 +208,86 @@ export const INITIAL_RITUALS: Ritual[] = [
     id: 'desespero',
     name: 'Desespero',
     description: 'Genera una necesidad imperiosa de contacto y presencia en la otra persona.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     prices: { '1d': 15000, '3d': 35000, 'VDF': 45000, '7d': 65000 }
   },
   {
     id: 'desespero-sexual',
     name: 'Desespero Sexual',
     description: 'Potencia el deseo carnal y la atracción magnética irresistible.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     prices: { '1d': 0, '3d': 0, 'VDF': 50000, '7d': 0 }
   },
   {
     id: 'trabajo-sexual',
     name: 'Trabajo Sexual',
     description: 'Ritual enfocado puramente en la intimidad y el fuego de la pasión.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     prices: { '1d': 15000, '3d': 35000, 'VDF': 45000, '7d': 65000 }
   },
   {
     id: 'desarmonia-vinculos',
     name: 'Desarmonía de Vínculos',
     description: 'Lograr que 2 personas se peleen y se genere conflicto.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     prices: { '1d': 0, '3d': 0, 'VDF': 35000, '7d': 0 }
   },
   {
     id: 'cierre-caminos',
     name: 'Cierre de Caminos Económico',
     description: 'Bloqueo del flujo económico de un objetivo.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     prices: { '1d': 0, '3d': 0, 'VDF': 25000, '7d': 0 }
   },
   {
     id: 'trabajo-cementerio',
     name: 'Trabajo de Cementerio',
     description: 'Ritual de máxima potencia y oscuridad. Consultar antes de realizar.',
-    category: 'Dominio',
+    category: 'Trabajo de Magia Negra',
     prices: { '1d': 0, '3d': 0, 'VDF': 250000, '7d': 0 }
   },
 
-  // --- JUSTICIA ---
+  // --- DIFERENTES TRABAJOS ---
   {
     id: 'trabajo-judicial',
     name: 'Trabajo Judicial',
     description: 'Apoyo energético para trámites legales, juicios y resoluciones a favor.',
-    category: 'Justicia',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 10000, '3d': 25000, 'VDF': 35000, '7d': 40000 }
   },
   {
     id: 'trabajo-ataud',
     name: 'Trabajo de Ataúd',
     description: 'Para que una persona pague por lo que hizo y el daño se devuelva infinito.',
-    category: 'Justicia',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 0, '3d': 0, 'VDF': 25000, '7d': 0 }
   },
   {
     id: 'volteo-danos',
     name: 'Volteo de Daños/Brujerías',
     description: 'Devuelve cualquier daño o trabajo oscuro a su origen.',
-    category: 'Justicia',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 10000, '3d': 25000, 'VDF': 30000, '7d': 40000 }
   },
-
-  // --- SALUD ---
   {
     id: 'armonizacion-chakras',
     name: 'Armonización de Chakras',
     description: 'Alineación de centros energéticos para bienestar integral.',
-    category: 'Salud',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 0, '3d': 0, 'VDF': 7500, '7d': 0 }
   },
   {
     id: 'trabajo-salud',
     name: 'Trabajo de Salud',
     description: 'Fortalecimiento energético para acompañar procesos de sanación física.',
-    category: 'Salud',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 5000, '3d': 15000, 'VDF': 25000, '7d': 35000 }
   },
   {
     id: 'trabajo-fertilidad',
     name: 'Trabajo de Fertilidad',
     description: 'Apertura energética para favorecer la concepción.',
-    category: 'Salud',
+    category: 'Diferentes Trabajos',
     prices: { '1d': 0, '3d': 0, 'VDF': 20000, '7d': 0 }
   }
 ];
