@@ -1,0 +1,33 @@
+{
+  "entities": {
+    "Ritual": {
+      "title": "Ritual",
+      "description": "Un ritual o servicio ofrecido por Franlilo",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "prices": {
+          "type": "object",
+          "properties": {
+            "1d": { "type": "number" },
+            "3d": { "type": "number" },
+            "VDF": { "type": "number" },
+            "7d": { "type": "number" }
+          }
+        },
+        "imageUrl": { "type": "string" },
+        "popular": { "type": "boolean" }
+      },
+      "required": ["id", "name", "description", "category", "prices"]
+    }
+  },
+  "firestore": {
+    "/rituals/{ritualId}": {
+      "schema": "Ritual",
+      "description": "Colección de rituales disponibles"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: rituals
+    // Document ID: ritualId
+    // Fields:
+    //   - id: string (required)
+    //   - name: string (required)
+    //   - description: string (required)
+    //   - category: string (required)
+    //   - prices: map (required)
+    //   - imageUrl: string (optional)
+    //   - popular: bool (optional)
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "djmix1262@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidRitual(data) {
+      return data.keys().hasAll(['id', 'name', 'description', 'category', 'prices']) &&
+             data.id is string &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 200 &&
+             data.description is string && data.description.size() > 0 && data.description.size() < 2000 &&
+             data.category is string &&
+             data.prices is map;
+    }
+
+    match /rituals/{ritualId} {
+      allow read: if true; // Publicly readable
+      allow create, update, delete: if isAdmin() && isValidRitual(request.resource.data);
+    }
+
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
